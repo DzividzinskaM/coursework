@@ -18,10 +18,13 @@ QRectF MoveItem::boundingRect() const
 
 void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(Qt::black);
+//    painter->setPen(Qt::black);
+  //  painter->setBrush(Qt::white);
+    painter->setPen(QPen(Qt::blue, 3));
     painter->setBrush(Qt::green);
-    painter->drawRect(-30,-30,60,60);
-    Q_UNUSED(option);
+    painter->drawEllipse(-30, -30, 60, 60);
+    QString num=QString::number(count);
+    painter->drawText(-3,-1, num);
     Q_UNUSED(widget);
 }
 
@@ -52,3 +55,5 @@ void MoveItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->setCursor(QCursor(Qt::ArrowCursor));
     Q_UNUSED(event);
 }
+
+
