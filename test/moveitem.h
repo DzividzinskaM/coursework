@@ -7,12 +7,21 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QCursor>
+#include <QString>
+
+
+using namespace std;
 
 class MoveItem : public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    explicit MoveItem(QObject *parent = 0);
+    int count;
+    explicit MoveItem(QObject *parent=nullptr);
+    MoveItem(int x)
+    {
+        count=x;
+    }
     ~MoveItem();
 
 signals:
@@ -26,5 +35,7 @@ private:
 
 public slots:
 };
+
+
 
 #endif // MOVEITEM_H
