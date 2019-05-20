@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        line.cpp \
         main.cpp \
         mainwindow.cpp \
         moveitem.cpp
 
 HEADERS += \
+        line.h \
         mainwindow.h \
         moveitem.h
 
