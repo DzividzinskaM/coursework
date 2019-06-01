@@ -8,13 +8,11 @@
 #include <QList>
 #include <QLabel>
 #include <QPushButton>
-//#include <iostream>
 #include <QLineEdit>
 #include <QtGui>
 #include <QtCore>
 
 #include "moveitem.h"
-#include "line.h"
 
 using namespace std;
 
