@@ -8,7 +8,7 @@
 #include <QList>
 #include <QLabel>
 #include <QPushButton>
-#include <iostream>
+//#include <iostream>
 #include <QLineEdit>
 #include <QtGui>
 #include <QtCore>
@@ -31,6 +31,7 @@ public:
     int x2_koordinate;
     int y1_koordinate;
     int y2_koordinate;
+    int **array_;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     int count=0;
@@ -44,6 +45,9 @@ private slots:
 
     //void on_pushButton_3_clicked();
 
+    void on_pushButton_3_clicked();
+
+
 private:
 
 
@@ -51,6 +55,7 @@ private:
     QGraphicsScene *scene;
 
     QList<MoveItem*> vertexlist;
+
 //protected:
    // void paintEvent(QPaintEvent *e);
 
