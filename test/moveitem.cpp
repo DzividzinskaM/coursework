@@ -21,10 +21,11 @@ void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 //    painter->setPen(Qt::black);
   //  painter->setBrush(Qt::white);
     painter->setPen(QPen(Qt::blue, 3));
-    painter->setBrush(Qt::green);
+    painter->setBrush(Qt::white);
     painter->drawEllipse(-30, -30, 60, 60);
     QString num=QString::number(count);
-    painter->drawText(-3,-1, num);
+    painter->setPen(QPen(Qt::black, 5));
+    painter->drawText(-3, 4, num);
     Q_UNUSED(widget);
 }
 
