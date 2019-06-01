@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>406</width>
+    <height>304</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,11 +105,30 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>160</y>
+      <width>121</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Prima</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLineEdit" name="matrix">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
       <width>111</width>
       <height>20</height>
      </rect>
@@ -121,7 +140,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>406</width>
      <height>21</height>
     </rect>
    </property>
