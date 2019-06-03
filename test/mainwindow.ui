@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>304</height>
+    <width>1039</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>135</x>
       <y>0</y>
-      <width>261</width>
-      <height>241</height>
+      <width>821</width>
+      <height>501</height>
      </rect>
     </property>
    </widget>
@@ -42,7 +42,7 @@
      <rect>
       <x>0</x>
       <y>30</y>
-      <width>141</width>
+      <width>131</width>
       <height>129</height>
      </rect>
     </property>
@@ -111,7 +111,7 @@
       <x>10</x>
       <y>160</y>
       <width>121</width>
-      <height>25</height>
+      <height>30</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -127,11 +127,24 @@
    <widget class="QLineEdit" name="matrix">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>190</y>
+      <x>20</x>
+      <y>360</y>
       <width>111</width>
       <height>20</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Boruvka">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Boruvka</string>
     </property>
    </widget>
   </widget>
@@ -140,8 +153,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>406</width>
-     <height>21</height>
+     <width>1039</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

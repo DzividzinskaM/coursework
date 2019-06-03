@@ -46,6 +46,8 @@ private slots:
     void on_pushButton_3_clicked();
 
 
+    void on_Boruvka_clicked();
+
 private:
 
 
@@ -53,9 +55,7 @@ private:
     QGraphicsScene *scene;
 
     QList<MoveItem*> vertexlist;
-
-//protected:
-   // void paintEvent(QPaintEvent *e);
+    QVector <QVector<int>> list_of_vertices;
 
 };
 

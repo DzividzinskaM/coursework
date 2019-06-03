@@ -2,7 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QPen>
-
+#include <QVector>
+#include <ctime>
 static int randomBetween(int low, int high)
 {
     return(qrand()%((high+1)-low)+low);
@@ -39,13 +40,15 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     QString name=QString ::number(count);
-    MoveItem *item = new MoveItem(count);        // Создаём графический элемента
+    MoveItem *item = new MoveItem(count);        // Создаём графический элемент
         int x=randomBetween(30, 470);
         int y=randomBetween(30, 470);
         item->setPos(x, y);  // Устанавливаем случайную позицию элемента
         item->setObjectName(name);
 
         scene->addItem(item);   // Добавляем элемент на графическую сцену
+        list_of_vertices.push_back(QVector <int>());
+        list_of_vertices[count].push_back(count);
         count++;
         vertexlist.append(item);
 
@@ -118,9 +121,6 @@ void MainWindow::on_pushButton_2_clicked()
  * */
 
 
-
-
-
 void MainWindow::on_pushButton_3_clicked()
 {
     int n=vertexlist.length();
@@ -189,16 +189,8 @@ void MainWindow::on_pushButton_3_clicked()
                  item1=vertexlist.at(b);
                  item0->setPos(x2, y2);
                  item0->setObjectName(name);
-
                  scene->addItem(item0);  // Добавляем элемент на графическую сцену*/
-
-
         }
-
-
-
-
-
         array_[a][b] = array_[b][a] = 999;
     }
     
@@ -210,4 +202,121 @@ void MainWindow::on_pushButton_3_clicked()
     }*/
     ui->matrix->setText(QString::number(mincost));
 
+}
+void MainWindow::on_Boruvka_clicked()
+{
+  QPen pen(Qt::green, 3);
+  int min = INT_MAX;
+  int i_min = -1, min_cost = 0;
+  int k = list_of_vertices.length();
+  QVector <int> route;
+  for (int i = 0 ; i < k; i++)
+  {
+      route.push_back(i);
+  }
+  for (int i = 0; i < list_of_vertices.length(); i++)
+  {
+      for (int j = 0; j < list_of_vertices.length(); j++)
+      {
+          if (array_[i][j] > 0 && array_[i][j] < min)
+          {
+              min = array_[i][j];
+              i_min = j;
+          }
+      }
+     if (i_min != -1)
+      {
+        if (i != route[i_min])
+        {
+         if (!list_of_vertices[i_min].isEmpty())
+         {
+            list_of_vertices[i_min].push_back(i);
+            route[i] = i_min;
+            list_of_vertices[i].pop_front();
+         }
+         else
+         {
+             list_of_vertices[route[i_min]].push_back(i);
+             route[i] = route[i_min];
+             list_of_vertices[i].pop_front();
+         }
+         MoveItem *temp = new MoveItem();
+         temp = vertexlist.at(i);
+         double temp_x = temp->x();
+         double temp_y = temp->y();
+         MoveItem *temp2 = new MoveItem();
+         temp2 = vertexlist.at(i_min);
+         double temp2_x = temp2->x();
+         double temp2_y = temp2->y();
+         min_cost  += array_[i][i_min];
+         scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen);
+         k--;
+       }
+       min = INT_MAX;
+       i_min = -1;
+     }
+  }
+  if (k==1) ui->matrix->setText(QString::number(min_cost));
+  else
+  {
+      QPen pen2(Qt::red, 3);
+      int start = -1, finish = -1;
+      int src = 0;
+      while (k != 1)
+      {
+          for (int p = 0; p < list_of_vertices.length(); p++)
+          {
+              if (!list_of_vertices[p].isEmpty())
+              {
+                  if (start == -1)
+                  {
+                      start = p;
+                      continue;
+                  }
+                  else
+                  {
+                      if (finish == -1)
+                      {
+                          finish = p;
+                          min = INT_MAX;
+                          i_min = -1;
+                          for (int i = 0; i < list_of_vertices[start].length(); i++)
+                          {
+                              for (int j = 0; j < list_of_vertices[finish].length(); j++)
+                              {
+                                  if (array_[i][j] > 0 && array_[i][j] < min)
+                                  {
+                                      src = i;
+                                      min = array_[i][j];
+                                      i_min = j;
+                                  }
+                              }
+                          }
+                          MoveItem *temp = new MoveItem();
+                          temp = vertexlist.at(src);
+                          double temp_x = temp->x();
+                          double temp_y = temp->y();
+                          MoveItem *temp2 = new MoveItem();
+                          temp2 = vertexlist.at(i_min);
+                          double temp2_x = temp2->x();
+                          double temp2_y = temp2->y();
+                          min_cost  += array_[src][i_min];
+                          scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen2);
+                          k--;
+                          for (int i = 0; i < start; i++)
+                          {
+
+                              list_of_vertices[finish].push_back(list_of_vertices[start].front());
+                              list_of_vertices[start].pop_back();
+                          }
+                          break;
+                      }
+                  }
+
+              }
+          }
+          start = finish = -1;
+      }
+      ui->matrix->setText(QString::number(min_cost));
+  }
 }

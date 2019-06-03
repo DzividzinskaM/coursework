@@ -10,16 +10,12 @@ MoveItem::~MoveItem()
 {
 
 }
-
 QRectF MoveItem::boundingRect() const
 {
     return QRectF (-30,-30,60,60);
 }
-
 void MoveItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    painter->setPen(Qt::black);
-  //  painter->setBrush(Qt::white);
     painter->setPen(QPen(Qt::blue, 3));
     painter->setBrush(Qt::white);
     painter->drawEllipse(-30, -30, 60, 60);
