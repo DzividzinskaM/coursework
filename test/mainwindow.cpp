@@ -2,8 +2,11 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <QPen>
+#include <iostream>
 #include <QVector>
+#include <QtDebug>
 #include <ctime>
+using namespace std;
 static int randomBetween(int low, int high)
 {
     return(qrand()%((high+1)-low)+low);
@@ -230,15 +233,21 @@ void MainWindow::on_Boruvka_clicked()
         {
          if (!list_of_vertices[i_min].isEmpty())
          {
-            list_of_vertices[i_min].push_back(i);
             route[i] = i_min;
-            list_of_vertices[i].pop_front();
+            while (!list_of_vertices[i].isEmpty())
+            {
+               list_of_vertices[i_min].push_back(list_of_vertices[i].front());
+               list_of_vertices[i].pop_front();
+            }
          }
          else
          {
-             list_of_vertices[route[i_min]].push_back(i);
              route[i] = route[i_min];
+             while (!list_of_vertices[i].isEmpty())
+             {
+             list_of_vertices[route[i_min]].push_back(list_of_vertices[i].front());
              list_of_vertices[i].pop_front();
+             }
          }
          MoveItem *temp = new MoveItem();
          temp = vertexlist.at(i);
@@ -259,9 +268,19 @@ void MainWindow::on_Boruvka_clicked()
   if (k==1) ui->matrix->setText(QString::number(min_cost));
   else
   {
-      QPen pen2(Qt::red, 3);
+      cout <<"-------------------------------------------------------------" << endl;
+      for (int s = 0; s < list_of_vertices.length(); s++)
+      {
+          for (int h = 0; h < list_of_vertices[s].length(); h++)
+          {
+              cout << list_of_vertices[s][h] << " ";
+          }
+          cout << endl;
+      }
+      cout <<"-------------------------------------------------------------" << endl;
       int start = -1, finish = -1;
       int src = 0;
+      int end = -1;
       while (k != 1)
       {
           for (int p = 0; p < list_of_vertices.length(); p++)
@@ -275,48 +294,60 @@ void MainWindow::on_Boruvka_clicked()
                   }
                   else
                   {
-                      if (finish == -1)
-                      {
                           finish = p;
                           min = INT_MAX;
                           i_min = -1;
-                          for (int i = 0; i < list_of_vertices[start].length(); i++)
+                          for (finish; finish < list_of_vertices.length(); finish++)
                           {
-                              for (int j = 0; j < list_of_vertices[finish].length(); j++)
-                              {
-                                  if (array_[i][j] > 0 && array_[i][j] < min)
-                                  {
-                                      src = i;
-                                      min = array_[i][j];
-                                      i_min = j;
-                                  }
-                              }
+                            if (!list_of_vertices[finish].isEmpty())
+                            {
+                                 for (int i = 0; i < list_of_vertices[start].length(); i++)
+                                 {
+                                    for (int j = 0; j < list_of_vertices[finish].length(); j++)
+                                    {
+                                        if (array_[list_of_vertices[start][i]][list_of_vertices[finish][j]] > 0 && array_[list_of_vertices[start][i]][list_of_vertices[finish][j]] < min)
+                                        {
+                                        src = i;
+                                        min = array_[list_of_vertices[start][i]][list_of_vertices[finish][j]];
+                                        i_min = j;
+                                        end = finish;
+                                        }
+                                    }
+                                 }
+                            }
                           }
                           MoveItem *temp = new MoveItem();
-                          temp = vertexlist.at(src);
+                          temp = vertexlist.at(list_of_vertices[start][src]);
                           double temp_x = temp->x();
                           double temp_y = temp->y();
                           MoveItem *temp2 = new MoveItem();
-                          temp2 = vertexlist.at(i_min);
+                          temp2 = vertexlist.at(list_of_vertices[end][i_min]);
                           double temp2_x = temp2->x();
                           double temp2_y = temp2->y();
-                          min_cost  += array_[src][i_min];
-                          scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen2);
+                          min_cost  += array_[list_of_vertices[start][src]][list_of_vertices[end][i_min]];
+                          scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen);
                           k--;
-                          for (int i = 0; i < start; i++)
+                          while (!list_of_vertices[start].isEmpty())
                           {
-
-                              list_of_vertices[finish].push_back(list_of_vertices[start].front());
-                              list_of_vertices[start].pop_back();
+                              list_of_vertices[end].push_back(list_of_vertices[start].front());
+                              list_of_vertices[start].pop_front();
                           }
                           break;
                       }
-                  }
+                 }
 
-              }
-          }
+           }
           start = finish = -1;
-      }
+          for (int s = 0; s < list_of_vertices.length(); s++)
+          {
+              for (int h = 0; h < list_of_vertices[s].length(); h++)
+              {
+                  cout << list_of_vertices[s][h] << " ";
+              }
+              cout << endl;
+          }
+          cout <<"-------------------------------------------------------------" << endl;
+          }
       ui->matrix->setText(QString::number(min_cost));
   }
 }
