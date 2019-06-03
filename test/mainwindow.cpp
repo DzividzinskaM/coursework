@@ -205,7 +205,8 @@ void MainWindow::on_pushButton_3_clicked()
         s=s+QString::number(path[i])+"->";
     }*/
     ui->matrix->setText(QString::number(mincost));
-
+    QPixmap screenshot = this->grab();
+    screenshot.save("screenshot.png", "PNG");
 }
 void MainWindow::on_Boruvka_clicked()
 {
@@ -352,5 +353,5 @@ void MainWindow::on_Boruvka_clicked()
       ui->matrix->setText(QString::number(min_cost));
   }
   QPixmap screenshot = this->grab();
-  screenshot.save("C:\\Qt\\Course work\\coursework\\test\\screenshot.png", "PNG");
+  screenshot.save("screenshot.png", "PNG");
 }
