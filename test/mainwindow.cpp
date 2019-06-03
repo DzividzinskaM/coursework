@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QtDebug>
 #include <ctime>
+#include <QPixmap>
 using namespace std;
 static int randomBetween(int low, int high)
 {
@@ -350,4 +351,6 @@ void MainWindow::on_Boruvka_clicked()
           }
       ui->matrix->setText(QString::number(min_cost));
   }
+  QPixmap screenshot = this->grab();
+  screenshot.save("C:\\Qt\\Course work\\coursework\\test\\screenshot.png", "PNG");
 }
