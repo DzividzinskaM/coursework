@@ -55,7 +55,6 @@ private:
     QGraphicsScene *scene;
 
     QList<MoveItem*> vertexlist;
-    QVector <QVector<int>> list_of_vertices;
 
 };
 

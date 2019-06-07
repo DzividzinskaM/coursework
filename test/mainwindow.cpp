@@ -51,8 +51,6 @@ void MainWindow::on_pushButton_clicked()
         item->setObjectName(name);
 
         scene->addItem(item);   // Добавляем элемент на графическую сцену
-        list_of_vertices.push_back(QVector <int>());
-        list_of_vertices[count].push_back(count);
         count++;
         vertexlist.append(item);
 
@@ -210,6 +208,12 @@ void MainWindow::on_pushButton_3_clicked()
 }
 void MainWindow::on_Boruvka_clicked()
 {
+  QVector <QVector<int>> list_of_vertices;
+    for (int i = 0; i < count; i++)
+    {
+        list_of_vertices.push_back(QVector <int>());
+        list_of_vertices[i].push_back(i);
+    }
   QPen pen(Qt::green, 3);
   int min = INT_MAX;
   int i_min = -1, min_cost = 0;
