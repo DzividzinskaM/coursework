@@ -52,15 +52,15 @@ private slots:
 
 
 
-    void on_Prima_clicked();
+    //void on_Prima_clicked();
 
-    void on_Boruvka_clicked();
+   // void on_Boruvka_clicked();
 
-    void on_Kruskal_clicked();
+   // void on_Kruskal_clicked();
 
     void on_Prima_2_clicked();
 
-    void on_radioButton_2_clicked();
+   // void on_radioButton_2_clicked();
 
     void on_Boruvka_2_clicked();
 
@@ -74,8 +74,6 @@ private:
     QGraphicsScene *scene;
 
     QList<MoveItem*> vertexlist;
-    QVector <QVector<int>> list_of_vertices;
-
 };
 
 
