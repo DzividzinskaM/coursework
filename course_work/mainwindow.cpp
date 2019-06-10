@@ -334,12 +334,17 @@ void MainWindow::on_Boruvka_2_clicked()
              }
              else
              {
-                 route[i] = route[i_min];
-                 while (!list_of_vertices[i].isEmpty())
-                 {
-                 list_of_vertices[route[i_min]].push_back(list_of_vertices[i].front());
-                 list_of_vertices[i].pop_front();
-                 }
+                    route[i] = route[i_min];
+                    int temp = route[i];
+                    while (list_of_vertices[temp].isEmpty())
+                    {
+                        temp = route[temp];
+                    }
+                    while (!list_of_vertices[i].isEmpty())
+                    {
+                        list_of_vertices[temp].push_back(list_of_vertices[i].front());
+                        list_of_vertices[i].pop_front();
+                    }
              }
              MoveItem *temp = new MoveItem();
              temp = vertexlist.at(i);
@@ -351,6 +356,14 @@ void MainWindow::on_Boruvka_2_clicked()
              double temp2_y = temp2->y();
              min_cost  += array_[i][i_min];
              scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen);
+             MoveItem *item = new MoveItem(i);
+             item->setPos(temp_x, temp_y);
+             item->setObjectName(QString::number(i));
+             scene->addItem(item);
+             MoveItem *item2 = new MoveItem(i_min);
+             item2->setPos(temp2_x, temp2_y);
+             item2->setObjectName(QString::number(i_min));
+             scene->addItem(item2);
              k--;
            }
            min = INT_MAX;
@@ -360,16 +373,6 @@ void MainWindow::on_Boruvka_2_clicked()
       if (k==1) ui->matrix->setText(QString::number(min_cost));
       else
       {
-          cout <<"-------------------------------------------------------------" << endl;
-          for (int s = 0; s < list_of_vertices.length(); s++)
-          {
-              for (int h = 0; h < list_of_vertices[s].length(); h++)
-              {
-                  cout << list_of_vertices[s][h] << " ";
-              }
-              cout << endl;
-          }
-          cout <<"-------------------------------------------------------------" << endl;
           int start = -1, finish = -1;
           int src = 0;
           int end = -1;
@@ -418,6 +421,14 @@ void MainWindow::on_Boruvka_2_clicked()
                               double temp2_y = temp2->y();
                               min_cost  += array_[list_of_vertices[start][src]][list_of_vertices[end][i_min]];
                               scene->addLine(temp_x, temp_y, temp2_x, temp2_y, pen);
+                              MoveItem *item = new MoveItem(list_of_vertices[start][src]);
+                              item->setPos(temp_x, temp_y);
+                              item->setObjectName(QString::number(list_of_vertices[start][src]));
+                              scene->addItem(item);
+                              MoveItem *item2 = new MoveItem(list_of_vertices[end][i_min]);
+                              item2->setPos(temp2_x, temp2_y);
+                              item2->setObjectName(QString::number(list_of_vertices[end][i_min]));
+                              scene->addItem(item2);
                               k--;
                               while (!list_of_vertices[start].isEmpty())
                               {
@@ -430,16 +441,7 @@ void MainWindow::on_Boruvka_2_clicked()
 
                }
               start = finish = -1;
-              for (int s = 0; s < list_of_vertices.length(); s++)
-              {
-                  for (int h = 0; h < list_of_vertices[s].length(); h++)
-                  {
-                      cout << list_of_vertices[s][h] << " ";
-                  }
-                  cout << endl;
-              }
-              cout <<"-------------------------------------------------------------" << endl;
-              }
+          }
           ui->matrix->setText(QString::number(min_cost));
       }
       QPixmap screenshot = this->grab();
@@ -536,4 +538,6 @@ void MainWindow::on_Kruskala_clicked()
         }
     }
     ui->matrix->setText(QString::number(suma_min));
+    QPixmap screenshot = this->grab();
+    screenshot.save("screenshot.png", "PNG");
 }
