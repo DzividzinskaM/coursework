@@ -300,7 +300,9 @@ void MainWindow::on_Boruvka_2_clicked()
             list_of_vertices.push_back(QVector <int>());
             list_of_vertices[i].push_back(i);
         }
-    QPen pen(Qt::green, 3);
+   if(!find_isolated_vertex(list_of_vertices.size(), array_))
+   {
+      QPen pen(Qt::green, 3);
       int min = INT_MAX;
       int i_min = -1, min_cost = 0;
       int k = list_of_vertices.length();
@@ -446,6 +448,9 @@ void MainWindow::on_Boruvka_2_clicked()
       }
       QPixmap screenshot = this->grab();
       screenshot.save("screenshot.png", "PNG");
+   }
+   else
+        QMessageBox::warning(this, "", "You have isolated vertex");
 }
 
 void MainWindow::on_Kruskala_clicked()
